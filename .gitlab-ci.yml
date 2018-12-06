@@ -2,8 +2,6 @@ stages:
   - build
   - test
 
-image: docker:stable
-
 cache:
   # share the cache between jobs
   key: ${CI_COMMIT_REF_SLUG}
@@ -18,7 +16,7 @@ services:
 
 buildDocker:
   stage: build
-  
+  image: docker:stable
   script:
     - docker build -t app:$CI_PIPELINE_ID ./webapp
     # gitlab registgy rw access (personal token)
@@ -31,4 +29,4 @@ testInDocker:
   image: docker:stable
   script:
     - docker image load -i docker_images/app-$CI_PIPELINE_ID
-    - docker run --rm -t -i app:$CI_PIPELINE_ID python tests.py
+    - docker run --rm app:$CI_PIPELINE_ID sh -c 'python tests.py'
