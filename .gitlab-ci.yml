@@ -36,6 +36,7 @@ deployToHK:
   stage: deploy
   image: registry.gitlab.com/laurent.steff/cicdlab/hk:1
   variables:
+    DOCKER_HOST: tcp://docker:2375
     HEROKU_API_KEY: ${HK_API_KEY}
   script:
     - heroku container:login
