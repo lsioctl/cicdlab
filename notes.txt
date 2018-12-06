@@ -1,0 +1,26 @@
+# history
+    1  export HEROKU_API_KEY=secret!
+    2  heroku login
+    3  docker ps
+    4  heroku container:push cicdlad/app
+    5* heroku container:push --hel
+    6  heroku container:push web
+    7  heroku container:push web -a ls-first
+    8  ls
+    9  docker push cicdlab/app:1 registry.heroku.com/ls-first/app
+   10  docker tag cicdlab/app:1 registry.heroku.com/ls-first/app:1
+   11  docker push registry.heroku.com/ls-first/app:1
+   12  heroku container:login
+
+Take care a password (which one) is stored in
+   13  cat /root/.docker/config.json 
+   14  docker push registry.heroku.com/ls-first/app:1
+   15  heroku container:release app
+   16  heroku container:release -a ls-first app
+   17  docker push registry.heroku.com/ls-first/app:1/app
+   18  docker tag cicdlab/app:1 registry.heroku.com/ls-first/app
+   19  docker push registry.heroku.com/ls-first/app
+   20  heroku container:release -a ls-first app
+   21  history
+
+https://devcenter.heroku.com/articles/container-registry-and-runtime#building-and-pushing-image-s
