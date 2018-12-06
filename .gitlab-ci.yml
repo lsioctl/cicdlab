@@ -4,6 +4,7 @@ stages:
 
 buildDocker:
   stage: build
+  image: docker:stable
   script:
     - docker build -t cicdlab/app:$CI_JOB_ID ./webapp
 
