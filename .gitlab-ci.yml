@@ -2,6 +2,10 @@ stages:
   - build
   - test
 
+cache:
+  paths:
+    - docker_images/
+
 # we are on a shared runner so we
 # do not use the Docker socket trick
 # but Docker in Docker
@@ -12,10 +16,15 @@ buildDocker:
   stage: build
   image: docker:stable
   script:
-    - docker build -t cicdlab/app:$CI_PIPELINE_ID ./webapp
+    - docker build -t app:$CI_PIPELINE_ID ./webapp
+    # gitlab registgy rw access (personal token)
+    # is to dangerous for me: using cache
+    # see: https://gitlab.com/gitlab-org/gitlab-ce/issues/47828
+    - docker save app:$CI_PIPELINE_ID -o docker_images/app-$CI_PIPELINE_ID
 
 testInDocker:
   stage: test
-  image: cicdlab/app:$CI_PIPELINE_ID
+  image: docker:stable
   script:
-    - python tests.py
+    - docker image load -i docker_images/app-$CI_PIPELINE_ID
+    - docker run --rm -t -i app:$CI_PIPELINE_ID python tests.py
