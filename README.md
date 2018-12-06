@@ -1,5 +1,9 @@
 # CI/CD LAB
 
+# App
+
+Modified from Docker Swarm and Heroku samples
+
 ## prepare the Heroku CLI image
 
 ```

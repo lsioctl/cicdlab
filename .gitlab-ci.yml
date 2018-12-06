@@ -19,21 +19,27 @@ buildDocker:
   stage: build
   image: docker:stable
   script:
-    - docker build -t app:$CI_PIPELINE_ID ./webapp
+    - docker build -t app:${CI_PIPELINE_ID} ./webapp
     # gitlab registgy rw access (personal token)
     # is to dangerous for me: using cache
     # see: https://gitlab.com/gitlab-org/gitlab-ce/issues/47828
-    - docker save app:$CI_PIPELINE_ID -o docker_images/app-$CI_PIPELINE_ID
+    - docker save app:${CI_PIPELINE_ID} -o docker_images/app-${CI_PIPELINE_ID}
 
 testInDocker:
   stage: test
   image: docker:stable
   script:
-    - docker image load -i docker_images/app-$CI_PIPELINE_ID
-    - docker run --rm app:$CI_PIPELINE_ID sh -c 'python tests.py'
+    - docker image load -i docker_images/app-${CI_PIPELINE_ID}
+    - docker run --rm app:${CI_PIPELINE_ID} sh -c 'python tests.py'
 
 deployToHK:
   stage: deploy
   image: registry.gitlab.com/laurent.steff/cicdlab/hk:1
+  variables:
+    HEROKU_API_KEY: ${HK_API_KEY}
   script:
-    - ls
+    - heroku container:login
+    - docker image load -i docker_images/app-${CI_PIPELINE_ID}
+    - docker tag docker_images/app-${CI_PIPELINE_ID} registry.heroku.com/ls-first/web
+    - docker push registry.heroku.com/ls-first/web
+    - heroku container:release -a ls-first web
