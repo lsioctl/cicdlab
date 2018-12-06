@@ -34,6 +34,6 @@ testInDocker:
 
 deployToHK:
   stage: deploy
-  image: registry.gitlab.com/laurent.steff/cicdlab/hk:latest
+  image: registry.gitlab.com/laurent.steff/cicdlab/hk:1
   script:
     - ls
