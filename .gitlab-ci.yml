@@ -2,6 +2,12 @@ stages:
   - build
   - test
 
+# we are on a shared runner so we
+# do not use the Docker socket trick
+# but Docker in Docker
+services:
+  - docker:dind
+
 buildDocker:
   stage: build
   image: docker:stable
