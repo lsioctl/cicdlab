@@ -1,0 +1,14 @@
+stages:
+  - build
+  - test
+
+buildDocker:
+  stage: build
+  script:
+    - docker build -t cicdlab/app:$CI_JOB_ID ./webapp
+
+testInDocker:
+  stage: test
+  image: cicdlab/app:$CI_JOB_ID
+  script:
+    - python tests.py
