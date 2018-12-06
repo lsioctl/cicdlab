@@ -2,7 +2,11 @@ stages:
   - build
   - test
 
+image: docker:stable
+
 cache:
+  # share the cache between jobs
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - docker_images/
 
@@ -14,7 +18,7 @@ services:
 
 buildDocker:
   stage: build
-  image: docker:stable
+  
   script:
     - docker build -t app:$CI_PIPELINE_ID ./webapp
     # gitlab registgy rw access (personal token)
