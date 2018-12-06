@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - deploy
 
 cache:
   # share the cache between jobs
@@ -30,3 +31,9 @@ testInDocker:
   script:
     - docker image load -i docker_images/app-$CI_PIPELINE_ID
     - docker run --rm app:$CI_PIPELINE_ID sh -c 'python tests.py'
+
+deployToHK:
+  stage: deploy
+  image: registry.gitlab.com/laurent.steff/cicdlab/hk:latest
+  script:
+    - ls
