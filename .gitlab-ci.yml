@@ -12,10 +12,10 @@ buildDocker:
   stage: build
   image: docker:stable
   script:
-    - docker build -t cicdlab/app:$CI_JOB_ID ./webapp
+    - docker build -t cicdlab/app:$CI_PIPELINE_ID ./webapp
 
 testInDocker:
   stage: test
-  image: cicdlab/app:$CI_JOB_ID
+  image: cicdlab/app:$CI_PIPELINE_ID
   script:
     - python tests.py
