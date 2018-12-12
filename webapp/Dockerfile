@@ -17,4 +17,4 @@ USER mywebapp
 # $PORT
 # For prod Heroku sets it
 # It must be an HTTP service
-CMD gunicorn --bind 0.0.0.0:$PORT wsgi --log-file -
+CMD gunicorn --bind 0.0.0.0:$PORT --log-file - wsgi
