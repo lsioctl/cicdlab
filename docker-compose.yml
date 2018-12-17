@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+  # application server in development mode
+  app-dev-server:
+    image: cicdlab/app-dev-server
+    build:
+      context: ./webapp
+      dockerfile: Dockerfile-dev
+    ports:
+      - "8100:8000"
+    volumes:
+      - ./webapp:/opt/webapp
+    restart: "no"

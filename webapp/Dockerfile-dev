@@ -1,0 +1,23 @@
+FROM python:3.4-alpine
+
+# Add our code
+ADD . /opt/webapp/
+WORKDIR /opt/webapp
+
+RUN pip install -r requirements.txt
+
+# Run the image as a non-root user
+RUN adduser -D mywebapp
+USER mywebapp
+
+EXPOSE 8000
+
+ENV FLASK_APP=app
+ENV FLASK_ENV=development
+# if not set the app.run is overriden
+# and listens to localhost, breaking
+# Docker port forwarding
+ENV FLASK_RUN_HOST=0.0.0.0
+ENV FLASK_RUN_PORT=8000
+
+CMD flask run

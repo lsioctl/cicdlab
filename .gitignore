@@ -1,0 +1,7 @@
+# IDEs and editors
+*.vscode
+*.swp
+*.idea
+
+# Cache
+*/__pycache__/
